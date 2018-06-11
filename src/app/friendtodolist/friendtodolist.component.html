@@ -1,0 +1,93 @@
+<div class="container pageContainer">
+
+  <!-- START USER INFO DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <div class="alert alert-info" style="word-wrap: break-word;">
+          <strong>You Are!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Name : {{userName}}</p>
+          <p>Your userId : {{userId}}</p>
+          <p *ngIf="socketId">Your Socket Id : {{socketId}}</p>
+          <p *ngIf="socketId">Your Socket Name : {{socketName}}</p>
+          <p *ngIf="socketId">Room Name : {{roomName}}</p>
+
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <!-- END USER INFO DIV -->
+
+  <!-- START Friend INFO DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <div class="alert alert-danger" style="word-wrap: break-word;">
+          <strong>You Friend Is!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Friend Name : {{friendUsername}}</p>
+          <p>Your Friend Id : {{friendId}}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <!-- FRIEND INFO DIV -->
+
+  <!-- Start of info div -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="todo-container">
+          <h1 class=" text-center">
+            <mark>ToDo List Collection</mark>
+          </h1>
+          
+          <div *ngIf="todoListArray">
+            <div *ngFor="let todo of todoListArray">
+              <div class="panel panel-default panel-info">
+                <div class="panel-heading text-center">{{todo.todoListTitle}}</div>
+                <div class="panel-body">
+                  <p class="text-center">{{todo.todoListId}}</p>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-12 col-xs-12">
+                        <button (click)="redirectToTodoList(todo.todoListId)" 
+                        class="btn btn-primary btn-block ">Manage Items.</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3">
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- end info div -->
+  
+
+
+</div>

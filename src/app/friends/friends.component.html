@@ -1,0 +1,127 @@
+<div class="container pageContainer">
+
+  <!-- START USER INFO DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <div class="alert alert-info" style="word-wrap: break-word;">
+          <strong>You Are!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Name : {{userName}}</p>
+          <p>Your userId : {{userId}}</p>
+          <p *ngIf="socketId">Your Socket Id : {{socketId}}</p>
+          <p *ngIf="socketId">Your Socket Name : {{socketName}}</p>
+          <p *ngIf="socketId">Room Name : {{roomName}}</p>
+
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <!-- END USER INFO DIV -->
+
+  <!-- START ALL friends DIV -->
+  <div class="container">
+
+    <div class="row">
+      <!-- all user div start -->
+      <div class="col-md-6 col-xs-12">
+        <div class="panel panel-default panel-info">
+          <div class="panel-heading"><h4>Users</h4></div>
+          <div class="panel-body">
+            <div *ngIf="allUserList">
+              <div *ngFor="let user of allUserList">
+                <div class="container-fluid">
+                  <div class="row bg-info" style="margin:5px;padding:5px;">
+                    <div class="col-md-8 col-xs-8">
+                      <h4 class="text-primary">{{user.firstName}} {{user.lastName}}
+                      </h4>
+                      <h5 class="text-info"> {{user.userId}}</h5>
+                    </div>
+                    <div class="col-md-4 col-xs-4" *ngIf="user.userId != userId">
+                      <button class=" btn btn-default btn-block" (click)="sendFriendRequest(user.userId)">
+                        <i class="fa  fa-user-plus  fa-2x"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end all user div start -->
+
+      <!-- friends request div  -->
+      <div class="col-md-6 col-xs-12">
+          <div class="panel panel-default panel-info">
+            <div class="panel-heading"><h4>Friend Requests</h4></div>
+            <div class="panel-body">
+              <div *ngIf="friendRequestList">
+                <div *ngFor="let friend of friendRequestList">
+                  <div class="container-fluid">
+                    <div class="row bg-warning" style="margin:10px;padding:5px;">
+                      <div class="col-md-8 col-xs-8">
+                        <!-- By -->
+                          <!-- if sender is me show TEXT me -->
+                          <h4 *ngIf = "friend.senderId === userId">By : ME</h4>
+                          <h5 *ngIf = "friend.senderId === userId">By : {{userId}}</h5>
+                          <!-- else show sender name and id -->
+                          <h4 *ngIf = "friend.senderId != userId">By : {{friend.senderUsername}}</h4>
+                          <h5 *ngIf = "friend.senderId != userId">By : {{friend.senderId}}</h5>
+                        <!-- To -->
+                          <!-- if receiver is me show TEXT me -->
+                          <h4 *ngIf = "friend.receiverId === userId">To : ME</h4>
+                          <h5 *ngIf = "friend.receiverId === userId">To : {{userId}}</h5>
+                          <!-- else show receiver name and id -->
+                          <h4 *ngIf = "friend.receiverId != userId">To : {{friend.receiverUsername}}</h4>
+                          <h5 *ngIf = "friend.receiverId != userId">To : {{friend.receiverId}}</h5>
+                      </div>
+                      <!-- status div start -->
+                      <div class="col-md-4 col-xs-4" >
+                        <div *ngIf = "friend.status === 1">
+                           <!-- Status -->
+                        <!-- if status is 1 and friend request receiver is me -->
+                        <div *ngIf ="friend.receiverId === userId">
+                            <button class=" btn btn-default btn-block" (click)="acceptFriendRequest(friend.senderId)">
+                             <i class="fa  fa-check fa-2x"></i>
+                           </button>
+                        </div>
+                        
+                          <!-- show accept button -->
+                        <!-- if status is 1 and friend request sender is me -->
+                          <!-- show not accepted status -->
+                          <h4 *ngIf ="friend.senderId === userId">PENDING</h4>
+                        </div>
+
+                        <div *ngIf = "friend.status === 2">
+                          <button class=" btn btn-default btn-block" (click) = "checkIfFriendsthenRoute(friend.senderId,friend.receiverId)">
+                            <i class="fa  fa-list  fa-2x"></i>
+                          </button>
+                        </div>
+                        
+                      </div>
+                      <!-- status div end -->
+                    </div>
+                  </div>
+  
+  
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- end friend request div -->
+ 
+    </div>
+
+  </div>
+  <!-- END ALL Friends DIV -->
+
+
+</div>

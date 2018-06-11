@@ -1,0 +1,186 @@
+<div class="container pageContainer" (window:keyup.control.z)="onUndoButton($event)">
+
+  <!-- START USER INFO DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <div class="alert alert-info" style="word-wrap: break-word;">
+          <strong>You Are!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Name : {{userName}}</p>
+          <p>Your userId : {{userId}}</p>
+          <p *ngIf="socketId">Your Socket Id : {{socketId}}</p>
+          <p *ngIf="socketId">Your Socket Name : {{socketName}}</p>
+          <p *ngIf="socketId">Room Name : {{roomName}}</p>
+
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <!-- END USER INFO DIV -->
+
+  <!-- START Friend INFO DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <div class="alert alert-danger" style="word-wrap: break-word;">
+          <strong>You Friend Is!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Friend Name : {{friendUsername}}</p>
+          <p>Your Friend Id : {{friendId}}</p>
+          <p>Your Friend Todo List Id : {{friendTodolistid}}</p>
+        </div>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <!-- FRIEND INFO DIV -->
+
+  <!-- START CHANGELOG DIV -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 col-xs-12" >
+        <div class="panel panel-default panel-info" *ngIf="!changelogArrayEmpty; else changelogArrayMayBeEmpty">
+          <div class="panel-heading">CHANGELOG</div>
+          <div class="panel-body">
+            <p>ChangelogId : {{changelogId}}</p>
+            <p>Item Created By :{{changelogUsername}} </p>
+            <p>List :{{changelogListId}} </p>
+            <p>Item Id :{{changelogItemId}} </p>
+            <p>Type : {{changelogType}}</p>
+            <p>Title : {{changelogItemTitle}}</p>
+            <p>Detail : {{changelogItemDetail}}</p>
+            <button class="btn btn-default btn-block" (click)="undo()">
+              <i class="fa  fa-undo fa-2x"></i>
+            </button>
+          </div>
+        </div>
+        <ng-template #changelogArrayMayBeEmpty>
+            <div class="alert alert-info">
+              <strong>Info!</strong>  If even after performing an action changelog doesn't appear, try refreshing the page.
+            </div>
+          </ng-template>
+      </div>
+      <div class="col-md-2">
+
+      </div>
+    </div>
+  </div>
+  <!-- END CHNAGELOG DIV -->
+
+  <!-- START BUTTON CONTAINER -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4 col-xs-12">
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+          <strong>New Item.</strong>
+        </button>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Item</h4>
+              </div>
+              <div class="modal-body">
+
+                <form #fpform="ngForm" (ngSubmit)="makeTodoItem()">
+                  <div class="form-group">
+                    <label>Add Title.</label>
+                    <input type="text" name="todoItemTitle" [(ngModel)]="todoItemTitle" #title="ngModel" class="form-control" placeholder="Enter Item Title."
+                      autofocus required>
+
+                    <label>Add Detail.</label>
+                    <input type="text" name="todoItemDetail" [(ngModel)]="todoItemDetail" #detail="ngModel" class="form-control" placeholder="Enter Item Detail."
+                      required>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary" [disabled]="!fpform.form.valid">Add Todo ITem!</button>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>
+  <!-- END BUTTON CONTAINER -->
+
+  <!-- START TODO ITEMS CONTAINER  -->
+  <div classs="container">
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div class="todo-container">
+          <h1 class=" text-center">
+            <mark>ToDo Items Collection</mark>
+          </h1>
+          
+          <div *ngIf="todoListItemsArray">
+            <div *ngFor="let item of todoListItemsArray">
+              <div class="panel panel-default panel-info">
+                <div class="panel-heading text-center"><h4>{{item.itemTitle}}</h4></div>
+                <div class="panel-body">
+                  <p class="text-center">{{item.itemDetail}}</p>
+                  <!-- BUTTON CONTAINER -->
+                  <div class="container-fluid">
+                    <div class="row panel-footer">
+
+                      <!-- edit button -->
+                      <div class="col-md-6 col-xs-6">
+                        <button type="button" class="btn btn-default btn-block" (click)="redirectToEditItem(item.itemId)">
+                          <i class="fa  fa-pencil fa-2x"></i>
+                        </button>
+                      </div>
+                      <!-- edit button end -->
+
+                      <!-- deletebutton start -->
+                      <div class="col-md-6 col-xs-6">
+                        <button class="btn btn-default btn-block" (click)="deleteTodoItem(item.itemId)">
+                          <i class="fa  fa-trash-o fa-2x"></i>
+                        </button>
+                      </div>
+                      <!-- delete button end -->
+
+                    </div>
+                  </div>
+                  <!-- END BUTTON CONTAINTER -->
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+
+      </div>
+    </div>
+  </div>
+  <!-- END TODO ITEMS CONTAINER -->
+
+</div>

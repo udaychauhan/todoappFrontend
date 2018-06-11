@@ -1,0 +1,40 @@
+<div class="container  ">
+  <div class="row" style="text-align:left">
+    <div class="col-md-2" ></div>
+   
+    <div class="col-md-8 col-xs-12 form-container">
+      <form #loginForm="ngForm" (ngSubmit)="loginUser()">
+
+        
+
+        <div class="form-group">
+          <label>Email Id</label>
+          <input type="text" name="emailid" [(ngModel)]="emailId" #email="ngModel" class="form-control" placeholder="Enter Email Id."
+            required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+
+          <input type="text" name="password" [(ngModel)]="password"  #pass="ngModel" class="form-control" placeholder="Enter Password."
+            required>
+        </div>
+        <div class="alert alert-warning" *ngIf="checkErrorFromBackend">
+          <strong>Warning!</strong> Invalid Username and/or Password.
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login.</button>
+        
+
+      </form>
+      <br>
+      <br>
+      <button class="btn btn-basic" (click)="signUp()">Sign Up.</button>
+      <br/>
+      <br>
+      <button class="btn btn-danger" (click)="forgotPassword()">Forgot Password.</button>
+    </div>
+
+    <div class="col-md-2" ></div>
+  </div>
+</div>

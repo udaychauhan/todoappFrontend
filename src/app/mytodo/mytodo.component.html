@@ -1,0 +1,122 @@
+<div class="container pageContainer">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div class="alert alert-info" style="word-wrap: break-word;">
+          <strong>You Are!</strong>
+          <p *ngIf="authToken">Your authToken : Is Present.</p>
+          <p>Your Name : {{userName}}</p>
+          <p>Your userId : {{userId}}</p>
+          <p *ngIf="socketId">Your Socket Id : {{socketId}}</p>
+          <p *ngIf="socketId">Your Socket Name : {{socketName}}</p>
+          <p *ngIf="socketId">Room Name : {{roomName}}</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4 col-xs-12">
+        <!-- FRIENDS BUTTON -->
+        <button type="button" class="btn btn-danger btn-block" (click)="redirectToFriendsComponent()">
+            <strong>Friends.</strong>
+        </button>
+        <!-- END FRIENDS BUTTON -->
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+          <strong>New ToDo List.</strong>
+        </button>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <form #fpform="ngForm" (ngSubmit)="makeTodoList()">
+                  <div class="form-group">
+                    <label>Add Title.</label>
+                    <input type="text" name="todoListTitle" [(ngModel)]="todoListTitle" #title="ngModel" class="form-control" placeholder="Enter ToDo List Title."
+                      required>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary" [disabled]="!fpform.form.valid">Make ToDo List!</button>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>
+  <!-- End of button container -->
+
+  <!-- Start of info div -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+
+      <div class="col-md-6">
+        <div class="todo-container">
+          <h1 class=" text-center">
+            <mark>ToDo List Collection</mark>
+          </h1>
+          
+          <div *ngIf="todoListArray">
+            <div *ngFor="let todo of todoListArray">
+              <div class="panel panel-default panel-info">
+                <div class="panel-heading text-center">{{todo.todoListTitle}}</div>
+                <div class="panel-body">
+                  <p class="text-center">{{todo.todoListId}}</p>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-6 col-xs-6">
+                        <button (click)="redirectToTodoList(todo.todoListId)" 
+                        class="btn btn-primary btn-block ">Manage Items.</button>
+                      </div>
+                      <div class="col-md-6 col-xs-6">
+                        <button *ngIf = "todo.userId == userId" (click)="deleteTodoList(todo.todoListId)" 
+                        class="btn btn-danger btn-block">Delete Me.</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3">
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+</div>

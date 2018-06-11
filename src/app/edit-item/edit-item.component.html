@@ -1,0 +1,85 @@
+<div class="container pageContainer">
+   
+    <!-- START USER INFO DIV -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <!-- info div start -->
+        <div class="col-md-8 col-xs-12">
+          <div class="alert alert-info">
+            <strong>You Are!</strong>
+            <p *ngIf="authToken">Your authToken : Is Present.</p>
+            <p>Your Name : {{userName}}</p>
+            <p>Your userId : {{userId}}</p>
+            <p *ngIf="socketId">Your Socket Id : {{socketId}}</p>
+            <p *ngIf="socketId">Your Socket Name : {{socketName}}</p>
+            <p *ngIf="socketId">Room Name : {{roomName}}</p>
+            <p>Todo List Id : {{todoListId}}</p>
+          </div>
+        </div>
+        <!-- info div end -->
+        <div class="col-md-2">
+        </div>
+      </div>
+    </div>
+    <!-- END USER INFO DIV -->
+
+    <!-- START ITEM EDIT DIV -->
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-6 col-xs-12 form-container">
+            <div class="alert alert-info">
+                 <strong>Item Id : </strong> {{itemId}}
+                 <br>
+                 <strong>Todo List Id : </strong> {{todoListId}}
+                 <br>
+                 <strong>User Id : </strong> {{userId}}
+                 <br>
+                 <strong>Username : </strong> {{userName}}
+                 <br>
+                 <strong>Title : </strong> {{prevItemTitle}}
+                 <br>
+                 <strong>Detail : </strong> {{prevItemDetail}}
+
+            </div>
+            <form #editForm="ngForm" (ngSubmit)="editItem()">
+                <div class="form-group">
+                  <label>Edit Title</label>
+                  <input type="text" name="itemTitle" [(ngModel)]="itemTitle" #title="ngModel" class="form-control" placeholder="Title."
+                    required>
+                </div>
+               <div class="form-group">
+                  <label>Edit Detail</label>
+                  <input type="text" name="itemDetail" [(ngModel)]="itemDetail"  #detail="ngModel" class="form-control" placeholder="Detail."
+                    required>
+                </div>
+                     
+                <button type="submit" class="btn btn-primary" [disabled]="!editForm.form.valid">Edit.</button>
+                </form>
+                <br>
+              
+                <br>
+                <button class="btn btn-danger" (click)="goBackToPreviousPage()">Go back.</button>
+        
+        </div>
+
+        <div class="col-md-3">
+
+         </div>
+  
+
+      </div>
+
+    </div>
+    <!-- END ITEM EDIT DIV -->
+
+
+
+
+</div>
